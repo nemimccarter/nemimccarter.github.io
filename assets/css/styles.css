@@ -1,4 +1,4 @@
-/*   
+/*
  * Template Name: Developer - Responsive Website Template for Developers
  * Version: 1.5
  * Author: Xiaoying Riley
@@ -116,6 +116,7 @@ iframe {
 */
 /* ======= Header ======= */
 .header {
+  margin-top: 25px;
   padding: 30px 0;
   background: #f5f5f5;
   border-top: 10px solid #778492;
@@ -170,6 +171,7 @@ iframe {
   padding-bottom: 60px;
 }
 .section {
+  margin-top: 25px;
   margin-bottom: 30px;
 }
 .section .section-inner {
@@ -188,6 +190,9 @@ iframe {
 }
 /* About Section */
 /* Latest Section */
+.latest .section{
+  margin-top: 25px;
+}
 .latest .item {
   margin-bottom: 30px;
 }
