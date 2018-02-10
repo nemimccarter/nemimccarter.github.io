@@ -47,10 +47,10 @@ var sequelize = new Sequelize('fa17g09', 'fa17g09', 'csc648fa17g09', {
 //Checking connection status
 var test = sequelize.authenticate()
     .then(function () {
-        console.log("CONNECTED!");
+        console.log("Database connection established.");
     })
     .catch(function (err) {
-        console.log("LORD HELP ME I CAN'T REACH THE DATABASE!");
+        console.log("app.js ERROR: Failed to connect to database");
     })
     .done();
 
