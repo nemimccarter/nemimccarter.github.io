@@ -1,0 +1,43 @@
+<!-- <div class="container">
+    <h2>My Current Conversations</h2>
+    <p>These are the current conversations:</p>
+    <section class="container">
+        <%results.forEach(function(result) { %>
+          <div class="row">
+              <p>Sender: <%= result.sender %> </p> 
+              <p>&nbsp Message: <%= result.content %> </p>   
+              <p>&nbsp date: <%= result.date %> </p>     
+          </div>
+        <% }) %>
+      </section>
+  </div> -->
+
+<div class="container">
+    <h2>My Current Conversations</h2>
+    <p>These are the current conversations:</p>
+    <section class="container">
+        <% for(var i = 0; i < results.length; i++) { %>
+            <section class="container">
+                <p>Sender: <%= results[i].sender %> </p>
+                <% if(results.length <= 1) { %>
+                    <p>&nbsp Message: <%= results[results.length-1].content %>
+                <% } %>
+                <%for(var j = i+1; j < results.length; j++) { %>
+                    <div class="container">
+                        <%if(results[i].sender == results[j].sender) { %>
+                            <p>&nbsp Message: <%= results[i].content %> </p>   
+                            <%i=j; %>
+                            <% if(i+1 == results.length) { %>
+                                <p>&nbsp Message: <%= results[results.length-1].content %> </p
+                            <% } %>
+                        <% } else { %>
+                            <p>&nbsp Message: <%= results[i].content %> </p>     
+                            <%break; %>
+                        <% } %>
+                    </div>
+                <% } %>
+            </section>
+            <% } %>
+        </section>
+    </div>
+    

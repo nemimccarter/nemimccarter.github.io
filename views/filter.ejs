@@ -1,0 +1,32 @@
+<section class="filter row">
+        <div class="btn-group div-centered">
+            <form action="filter" method="post" class="form-inline">
+                    <select name="taskOption">
+                            <%  var rooms = 5; %>
+                            <% for (var i = 0; i < rooms; i++){ %>
+                                <option value=<%= i %>> <%= i %>+ Beds</option>
+                            <% } %>
+                    </select>
+                <input type="submit" class="btn btn-primary">
+            </form>
+        </div>
+    </section>
+        
+<h1><%= title %></h1>
+<p>Welcome to <%= title %></p>
+
+<section class="row">
+    <div class="results">
+        <%listings.forEach(function(listing) { %>   
+            <div class="thumbnail">
+                <img src=<%= listing.thumbnail %> class="img-responsive" />
+                <div class="caption">
+                    <p>City: <%= listing.city %> </p> 
+                    <p>State: <%= listing.state %> </p> 
+                    <p>Number of Bedrooms: <%= listing.numBedrooms %> </p>     
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</section>
+    

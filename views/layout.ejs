@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- BOOTSTRAP -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+  <!-- NORMALIZE -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+
+  <!-- GOOGLE FONTS -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+
+  <!-- custom stylesheet -->
+  <link rel="stylesheet"
+  href="<% if (locals.fa17g09_env_prefix) { %>/<%= fa17g09_env_prefix %><% } %>/stylesheets/main.css">
+
+  <!-- FONT AWESOME ICONS -->
+  <script src="https://use.fontawesome.com/c8878a39bb.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>    
+</head>
+
+<body>
+	<!--[if lt IE 8]>
+		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+	<![endif]-->
+    <div class="container-wrapper">
+        <% var isSearchPage = "fixed-container"; %>
+        <% var title = title; %>
+        <% if (title != "Search") { isSearchPage = ""; } %>
+        <div class="container-fluid <%= isSearchPage %>">
+            <!-- DISCLAIMER TOP BAR -->
+            <div class="alert disclaimer row" role="alert">
+                <p>San Francisco State University, Fall 2017. For Demonstration Only.</p>
+            </div>
+            <!-- END DISCLAIMER -->
+
+            <!-- NAV BAR -->
+            <div class="row">
+                <nav class="navbar navbar-expand-md navbar-dark bg-dark col-lg-12">
+                    <a class="navbar-brand col-lg-1 col-md-1 col-sm-1 col-1" href="<% if (locals.fa17g09_env_prefix) { %>/<%= fa17g09_env_prefix %><%} else {%>/<%}%>">
+                        <img src="<% if (locals.fa17g09_env_prefix) { %>/<%= fa17g09_env_prefix %><%}%>/assets/logo-houseshop.svg" class="image-logo">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="searchbar col-lg-6 col-md-5 col-sm-12">
+                        <form action="<% if (locals.fa17g09_env_prefix) { %>/<%= fa17g09_env_prefix %><%}%>/search" method="post" class="form-inline">
+                            <div class="input-group" style="width:100%">
+                                <input name="city" type="query" class="form-control" id="search" placeholder="Enter address, zip code, or city ..." autocomplete="off" value="<% if (locals.previousSearchString) { %><%=previousSearchString %><%}%>" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
+                        <!-- END Search Bar -->
+                    </div>
+                    <div class="collapse navbar-collapse nav-end col-lg-5 col-md-6 col-sm-12" id="navbarCollapse">
+                        <ul class="nav navbar-nav justify-content-end">
+                            <li class="nav-item">
+                                <a class="nav-link" href="<% if (locals.fa17g09_env_prefix) { %>/<%= fa17g09_env_prefix %><%}%>/about">About</a>
+                            </li>
+                            <% if(locals.UserState != 0 && locals.User && locals.User.userType == 'listingAgent') { %>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<% if (locals.fa17g09_env_prefix) { %>/<%= fa17g09_env_prefix %><%}%>/dashboard">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<% if (locals.fa17g09_env_prefix) { %>/<%= fa17g09_env_prefix %><%}%>/messageBoard">Inbox</a>
+                                </li>
+                            <% } %>
+                            <li class="nav-item">
+                                <!-- SIGN IN/LOG IN -->
+                                <% if (locals.UserState != 0) { %>
+                                    <form action="<% if (locals.fa17g09_env_prefix) { %>/<%= fa17g09_env_prefix %><%}%>/logout" method="post">
+                                        <input  type="submit" class="btn btn-primary btn-lg btn-log-in" name="Log Out" value="Log Out" />
+                                    </form>
+                                <% } else { %>
+                                <button type="button" class="btn btn-primary btn-lg btn-log-in" data-toggle="modal" data-target="#myModal" > Log In </button>
+                                <% } %>
+                                <!-- END SIGNIN/LOG IN -->
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <!-- END NAV BAR -->
+        </div>
+        <!-- END HEADER CONTAINER -->
+
+        <!-- MAIN CONTENT -->
+        <div id= "main" class="main container-fluid">
+            <%- body %>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="myModalLabel">Welcome to HouseShop</h2>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <h2 class="modal-title center-titlesLogin" id="myModalLabel">Log In</h2>
+                        <!-- Login -->
+                        <form action="<% if (locals.fa17g09_env_prefix) { %>/<%= fa17g09_env_prefix %><%}%>/login" method="post" role="form">
+                            <div class="row">
+                                <div class="form-group center-sign_up_in">
+                                    <input type="text" name="email" id="user_name" class="form-control input-sm" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group center-sign_up_in">
+                                    <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 div-centered">
+                                <input type="submit" value="Log In" class="btn btn-info btn-block">
+                            </div>
+                        </form>
+                        <br>
+
+                        <!-- END Login  -->
+                        <hr style="width: 100%; color: black; height: 1px; " />
+
+                        <!-- Forms for signup -->
+                        <h2 class="modal-title center-titlesSignUp" id="myModalLabel">Sign Up</h2>
+                        <form action="<% if (locals.fa17g09_env_prefix) { %>/<%= fa17g09_env_prefix %><%}%>/signup" method="post" role="form">
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6 ">
+                                    <div class="form-group widthOfFields2">
+                                        <input type="text" name="firstName" id="first_name" class="form-control input-sm" placeholder="First Name">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group widthOfFields2">
+                                        <input type="text" name="lastName" id="last_name" class="form-control input-sm" placeholder="Last Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group widthOfFields3">
+                                <input type="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address">
+                            </div>
+                            <div class="form-group widthOfFields3">
+                                <input type="Phone" name="Phone" id="Phone" class="form-control input-sm" placeholder="Phone Number">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group widthOfFields2">
+                                        <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group widthOfFields2">
+                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password">
+                                    </div>
+                                </div>
+                                <!-- Check Boxs -->
+                                <div class = "checkBoxAdjust2">
+                                    <label class="form-check-label" >
+                                        <input type="checkbox" class="form-check-input checkBoxAdjust">
+                                        <a href="<% if (locals.fa17g09_env_prefix) { %>/<%= fa17g09_env_prefix %><% } %>/terms" target="_blank">I agree to the terms</a>
+                                    </label>
+                                </div>
+
+                                <div class="col form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input checkb" name="listingAgent">
+                                        I am a listing agent.
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 div-centered">
+                                <input type="submit" value="Sign Up" class="btn btn-info btn-block ">
+                            </div>
+                        </form>
+                        <br>
+                        <!-- END Sign Up -->
+                        <!-- END Modal Body -->
+
+                        <div class="modal-footer ">
+                            <div class ="toTheLeft-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                        <!-- END Modal Footer -->
+
+                    </div>
+                    <!-- END Modal Content -->
+                </div>
+                <!-- END modal-dialog -->
+            </div>
+            <!-- END #myModal -->
+
+
+        </div>
+        <!-- END MAIN CONTENT -->
+
+        <!-- FOOTER -->
+        <% var isSearchPage = "display-none"; %>
+        <% var title = title; %>
+        <% if (title != "Search") { isSearchPage = ""; } %>
+        <div class="container-fluid <%= isSearchPage %> ">
+            <div class="container">
+                <footer>
+                    <p class="float-right"><a href="#">Back to top</a></p>
+                    <p>&copy; 2017 SFSU &middot; <a href="<% if (locals.fa17g09_env_prefix) { %>/<%= fa17g09_env_prefix %><%}%>/about">About</a></p>
+                </footer>
+            </div>
+            <!-- END FOOTER -->
+
+        </div>
+        <!-- END CONTAINER-WRAPPER -->
+
+        <!-- JavaScript plugins -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.4.min.js"><\/script>')</script>
+
+        <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+        <script>
+           window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+           ga('create','UA-111280360-1','auto');ga('send','pageview')
+       </script>
+       <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+   </body>
+   </html>

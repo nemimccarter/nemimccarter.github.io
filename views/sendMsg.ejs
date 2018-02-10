@@ -1,0 +1,26 @@
+<section class="row header">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <a class="btn btn-primary" href="/messageBoard" role="button">
+            View Messages <i class="fa fa-envelope" aria-hidden="true"></i>
+        </a>
+    </div>
+    <div class="col-lg-8 col-md-6 col-sm-12">
+        <h3><%= title %></h3>            
+    </div>
+</section>
+<!-- END page header -->
+
+<section class="container">
+    <h2>Messages Prototype</h2>
+    <p>This is the message prototype:</p>
+    <form action="/sendMessages" method="post">
+      <div class="form-group">
+        <label for="comment">User Id:</label>
+        <input type="text" class="form-control" name="usr">
+        <label for="comment">Message:</label>
+        <textarea class="form-control" rows="2" id="comment" name="messages"></textarea>
+        <input type="submit" class="btn btn-primary">
+      </div>
+    </form>
+</section> 
+<!-- END page header -->

@@ -1,0 +1,49 @@
+<div class="container">
+    <h2>Admin Dashboard Remove User</h2>
+    <form action="<% if (locals.fa17g09_env_prefix) { %>/<%= fa17g09_env_prefix %><%}%>/adminDashboard/removeUser" method="post">
+      <div class="form-group">
+        <label for="comment">User Email:</label>
+        <input type="text" class="form-control" name="userEmail">
+        <input type="submit" class="btn btn-primary">
+      </div>
+    </form>
+</div>
+
+<div class="container">
+    <h2>List of All current Users</h2>
+    <section class="container">
+        <%results.forEach(function(result) { %>
+          <div class="row">
+              <p>Name: <%= result.firstName %> </p> 
+              <p>&nbsp Last Name: <%= result.lastName %> </p>   
+              <p>&nbsp Email: <%= result.email %> </p>     
+          </div>
+        <% }) %>
+    </section>
+</div> 
+
+<div class="container">
+    <h2>Admin Dashboard Remove Listing</h2>
+    <form action="<% if (locals.fa17g09_env_prefix) { %>/<%= fa17g09_env_prefix %><%}%>/adminDashboard/removeListing" method="post">
+      <div class="form-group">
+        <label for="comment">Listing Id:</label>
+        <input type="text" class="form-control" name="listingId">
+        <input type="submit" class="btn btn-primary">
+      </div>
+    </form>
+</div>
+
+<div class="container">
+    <h2>List of All current Listings</h2>
+    <section class="container">
+        <%listingsResult.forEach(function(result) { %>
+          <img src=<%= result.thumbnail %> class="img-responsive" />
+          <div class="row">
+              <p>Listing Id: <%= result.id %> </p> 
+              <p>&nbsp City: <%= result.city %> </p> 
+              <p>&nbsp State: <%= result.state %> </p>  
+              <p>&nbsp Bedooms: <%= result.bedRooms %> </p>      
+          </div>
+        <% }) %>
+    </section>
+</div> 

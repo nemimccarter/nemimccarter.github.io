@@ -1,0 +1,151 @@
+<section class="row header">
+    <div class="col-lg-8 col-md-6 col-sm-12">
+        <h3>Welcome <%= User.firstName  %></h3>            
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <a class="btn btn-primary" href="<% if (locals.fa17g09_env_prefix) { %>/<%= fa17g09_env_prefix %><%}%>/listings" role="button">
+            Create New Listing <i class="fa fa-plus-circle" aria-hidden="true"></i>
+        </a>
+    </div>
+</section>
+<!-- END page header -->
+
+<section class="container">
+    <div class="row">
+        <div class="col tabs">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="listings-tab" data-toggle="tab" href="#listings" role="tab" aria-controls="listings" aria-selected="true">Listings</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="contacts-tab" data-toggle="tab" href="#contacts" role="tab" aria-controls="contacts" aria-selected="false">Contacts</a>
+              </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- END Tabs -->
+
+<section class="container">
+    <div class="row tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="listings" role="tabpanel" aria-labelledby="nav-listings-tab">
+            <table id="tableElement" class="table table-hover table-responsive">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">City</th>
+                  <th scope="col">State</th>
+                  <th scope="col">Zipcode</th>
+                  <th scope="col"><a href="#" onclick="sortBed(tableElement, 5)">Price</a></th>
+                  <th scope="col"><a href="#" onclick="sortBed(tableElement, 6)">Beds</a></th>
+                  <th scope="col"><a href="#" onclick="sortBed(tableElement, 7)">Baths</a></th>
+                </tr>
+              </thead>
+              <tbody class ="tests" id="listingItems">
+                <%listings.forEach(function(listing) { %>
+                    <tr class="listing" id="listing">
+                      <td><%= listing.id %></th>
+                      <td><%= listing.address %></td>
+                      <td><%= listing.city %></td>
+                      <td><%= listing.state %></td>
+                      <td><%= listing.zipcode %></td>
+                      <td class="priceClass" id="<%= listing.price %>"><%= listing.price %></td>
+                      <td class="bedClass" id="<%= listing.numBedrooms %>"><%= listing.numBedrooms %></td>
+                      <td class="bathClass" id="<%= listing.numBathrooms %>"><%= listing.numBathrooms %></td>
+                    </tr>
+                <% }) %>
+              </tbody>
+            </table>
+        </div>
+        <!-- END Listings Content Tab -->
+
+        <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="nav-contacts-tab">
+            <table class="table table-hover table-responsive">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">User Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%totalUsers.forEach(function(user) { %>
+                    <tr>
+                      <th scope="row"><%= user.id %></th>
+                      <td><%= user.firstName %></td>
+                      <td><%= user.lastName %></td>
+                      <td><%= user.email %></td>
+                      <td><%= user.userType %></td>
+                    </tr>
+                <% }) %>
+              </tbody>
+            </table>
+        </div>
+        <!-- END Contact Content Tab -->
+
+    </div>
+</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+  //sort listings based on price acending order
+
+  function sortPrice() {
+    var listSection = document.getElementById('tableElement');
+    
+    for(let i = 0; i < listSection.children.length; i++){
+      if(listSection.children[i].id == 'listingItems'){
+        var parent = listSection.children[i]; 
+      }
+    }
+
+    var children = [];
+    for (var i = 0; i < parent.childNodes.length; i++) {
+        if (parent.childNodes[i].className == "listing") {
+          children.push(parent.childNodes[i]); 
+        }        
+    }
+    let childrenLength = children.length; 
+    var prices = [], i, len;
+
+    for (let k = 0; k < childrenLength; k++) {
+      for(let jj = 0; jj < children[k].children.length; jj++){
+        if(children[k].children[jj].id != '' && children[k].children[jj].className == 'priceClass')
+          prices.push(children[k].children[jj].id);
+      }
+    }
+    prices.sort(function(a, b) {return(b - a);});
+    console.log(prices);
+     for (i = 0, len = prices.length; i < len; i++) {
+         parent.appendChild(findChild(prices[i], children));
+        
+     }
+}
+
+//helper function to find child divs of parent class
+function findChild(value, children){
+  for(let i = 0; i < children.length; i++){
+    for(let j = 1; j < children[i].children.length; j++){
+      if(children[i].children[j].className == 'priceClass'){
+        if(children[i].children[j].id == value)
+        return children[i]; 
+      }
+    }
+  }
+}
+
+function sortBed(table_id, sortColumn){
+  var tableData = document.getElementById('tableElement').getElementsByClassName('tests').item(0);
+  var rowData = tableData.getElementsByTagName('tr');            
+  for(var i = 0; i < rowData.length - 1; i++){
+      for(var j = 0; j < rowData.length - (i + 1); j++){
+          if(Number(rowData.item(j).getElementsByTagName('td').item(sortColumn).innerHTML.replace(/[^0-9\.]+/g, "")) < Number(rowData.item(j+1).getElementsByTagName('td').item(sortColumn).innerHTML.replace(/[^0-9\.]+/g, ""))){
+              tableData.insertBefore(rowData.item(j+1),rowData.item(j));
+          }
+      }
+  }
+}
+</script>
+  
